@@ -1,0 +1,7 @@
+﻿  Archivo.cpp
+  CambiosRealizados.cpp
+  Reportes.cpp
+  X.cpp
+C:\Users\mynor\source\repos\X\X\X.cpp(217,22): warning C4018: '<': no coinciden signed/unsigned
+  Generando código...
+  X.vcxproj -> C:\Users\mynor\source\repos\X\Debug\X.exe

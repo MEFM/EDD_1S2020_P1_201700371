@@ -1,0 +1,9 @@
+digraph a{
+rankdir = LR;
+node[shape = square];
+x009BBFA0label[Palabra buscada = "hola
+Palabra reemplazada = "adios ];
+x009BBFA0->x009B7E08;
+x009B7E08label[Palabra buscada = "hola
+Palabra reemplazada = "adios ];
+x009B7E08->xCCCCCCCC;
