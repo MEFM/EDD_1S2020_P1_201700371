@@ -1,6 +1,6 @@
 #include "Archivo.h"
 
-void Archivo::insertar(CambiosRealizados cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
+void Archivo::insertar(CambiosRealizados* cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
 	NodoArchivo* nuevo = new NodoArchivo(cambios, rechazado, texto, nombre);
 
 
@@ -42,7 +42,7 @@ cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << 
 	}
 }
 
-void Archivo::menuReportes(CambiosRealizados cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
+void Archivo::menuReportes(CambiosRealizados* cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
 	bool validador = true;
 	int opcion = 0;
 	if (this->primero == 0) {
@@ -51,7 +51,7 @@ void Archivo::menuReportes(CambiosRealizados cambios, Denegado* rechazado, Letra
 	}
 	while (validador) {
 		system("cls");
-		cout << "[1. Letras] [2. Palabras Buscadas] [3. Palabras Ordenadas] [4. Salir]" << endl;
+		cout << "[1. Letras] [2. Log Reemplazos] [3. Palabras Busquedas] [4. Reemplazos]" << endl;
 		cout << "Ingrese su opcion." << endl;
 		cin >> opcion;
 
@@ -61,19 +61,65 @@ void Archivo::menuReportes(CambiosRealizados cambios, Denegado* rechazado, Letra
 		}
 		//Reporte de Palabras buscadas, tanto las buena como las malas.
 		else if (opcion == 2) {
-			cambios.graficar();
+			cambios->graficar();
 			rechazado->graficar();
 			
 		}
 		//Palabras ordenadas de busquedas y reemplazos
 		else if (opcion == 3) {
-			cambios.graficarBuscadas();
-			cambios.graficarReemplazadas();
+			cambios->graficarBuscadas();
+			//cambios->graficarReemplazadas();
+
 		}
 		else if (opcion == 4) {
-			validador = false;
+			cambios->graficarReemplazadas();
 		}
-
+		else {
+			break;
+		}
 	}
 
+}
+
+
+void Archivo::menuReportesAbrir(string nombre) {
+	if (this->primero == 0) {
+		cout << "Lo siento brou el menu de reportes no esta disponible para ti" << endl;
+	}
+	else {
+		NodoArchivo* auxiliar = this->primero;
+		while (auxiliar != 0 || auxiliar->getNombre() != nombre) {
+			auxiliar = auxiliar->getSiguiente();
+		}
+
+		bool validador = true;
+		int opcion = 0;
+		while (validador) {
+			cout << "[1. Letras] [2. Log Reemplazos] [3. Palabras Busquedas] [4. Reemplazos] [5. Menu Principal]" << endl;
+			cout << "Ingrese su opcion." << endl;
+			cin >> opcion;
+
+			switch (opcion)
+			{
+			case 1:
+				auxiliar->getTexto()->graficar();
+				break;
+			case 2:
+				auxiliar->getCambios()->graficar();
+				auxiliar->getRechazado()->graficar();
+				break;
+			case 3:
+				auxiliar->getCambios()->graficarBuscadas();
+				break;
+			case 4:
+				auxiliar->getCambios()->graficarReemplazadas();
+				break;
+			case 5:
+				validador = false;
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }

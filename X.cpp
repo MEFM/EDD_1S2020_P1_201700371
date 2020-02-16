@@ -51,6 +51,7 @@ void menu()
 			break;
 		case 2:
 			//Arbrir
+			abrir();
 			break;
 		case 3:
 			//Recientes
@@ -75,34 +76,64 @@ void buscarReemplazar(string& texto, string buscar, string reemplazar) {
 }
 
 void abrir() {
-	char codigo1 = ' ';
-	char codigo2;
-	string texto = "";
-	cout << "Ingresar cosas" << endl;
-	LetrasTexto* letras = new LetrasTexto();
-	while (true) {
-		codigo1 = _getch();
-		cout << "" << codigo1;
-		texto += codigo1 + "";
-		if (codigo1 == 94) {
-			codigo2 = _getch();
-			if (codigo2 == 99) {
-				cout << "Q" << endl;
-			}
-		}
-		else if (codigo1 == 8) {
-			//Metodo de eliminar
-			letras->eliminarPrincipio();
-		}
-		else if (codigo1 == 115) {
-			break;
-		}
+	cout << "Ingresa el nombre del archivo a abrir." << endl;
+	string archivo = "";
+	string linea = "";
+	string parrafo = "";
+	string manetenedor = "";
+	cin.ignore();
+	getline(cin, archivo);
+	fstream fichero;
+	fichero.open(archivo.c_str(), ios::in);
 
-
-		letras->insertarPrimero(codigo1);
+	if (fichero.is_open()) {
+		while (!fichero.eof()) {
+			getline(fichero, linea);
+			cout << "$" <<linea << endl;
+			parrafo += linea;
+		}
+		fichero.close();
 	}
-	cout << texto << endl;
-	letras->graficar();
+	else {
+		cout << "El archivo que buscas es inexistente." << endl;
+	}
+
+	bool validador = true;
+	LetrasTexto* caracteres = new LetrasTexto();
+	while (validador) {
+		system("cls");
+		cout << parrafo << endl;
+		cout << "Guardar ^s		Reportes ^c		Buscar y Reemplazar ^w		Menu Principal ^p" << endl;
+		string opcion = "";
+		getline(cin, opcion);
+		if (opcion == "^s"){
+
+			caracteres = new LetrasTexto();
+			ofstream texto(archivo);
+			texto << parrafo << endl;
+			texto.close();
+			cout << "Archivo guardado." << endl;
+			char* letraa = new char[parrafo.length() + 1];
+			strcpy(letraa, parrafo.c_str());
+			for (int i = 0; i< (parrafo.length() + 1); i++) {
+				caracteres->insertarPrimero(letraa[i]);
+			}
+			_getch();
+		}else if (opcion == "^c") {
+			system("cls");
+			cout << "Seccion de reportes" << endl;
+			archiv->menuReportesAbrir(archivo);
+
+		}else if (opcion == "^w") {
+
+		}
+		else if(opcion == "^p"){
+
+		}
+		
+		
+	}
+
 }
 
 void cajaTexto() {
@@ -115,7 +146,7 @@ void cajaTexto() {
 	string nombreArchivo = "";
 
 	LetrasTexto* letras = new LetrasTexto();
-	CambiosRealizados cambios =  CambiosRealizados();
+	CambiosRealizados* cambios = new CambiosRealizados();
 	Denegado* rechazado = new Denegado();
 
 	ofstream auxiliar("auxiliar.txt");
@@ -166,30 +197,33 @@ void cajaTexto() {
 			getline(cin, reemplazar); // setea valor en la variable reemplazar
 			cout << endl;//^ ascii 94
 			buscarReemplazar(text, buscar, reemplazar);
-			
+			string cambio = "";
 			
 			system("cls");
 			//char cambio = _getch();
 			cout << "Si cierras sin haber guardado tus cambios, you are f*** up dude" << endl;
 			cout << "Desea realizar cambios? ^y(SI)/^z(NO)" << endl;
-			cin.ignore();
-			string cambio = "";
-			getline(cin, cambio);
+			cin >> cambio;
+			
+			
 			
 			if (cambio == "^z") { //aca se revierten los cambios que se realizaron con anterioridad
 				text = soporte;
 				auxiliar << text << endl;
-				cambios.pop();
+				cambios->pop();
 				rechazado->insertar(buscar, reemplazar, false);
+				//cout << "0s" << endl;
 			}
-			else if(cambio =="^y") // aca se realizan los cambios que se pidieron en la consola
+			else if(cambio == "y") // aca se realizan los cambios que se pidieron en la consola
 			{
 				
-				cambios.push(buscar, reemplazar, true);
+				cambios->push(buscar, reemplazar, true);
+
+				//cambios.graficar();
 				rechazado->pop();
 				auxiliar << text << endl;
 				auxiliar.close();
-				cambios.graficar();
+				//cout << "as" << endl;
 			}
 			
 			char confir = _getch();
@@ -208,8 +242,9 @@ void cajaTexto() {
 			cout << "Guardar Archivo!" << endl << "*NO GUARDE ARCHIVOS CON ESPACIOS*" << endl;
 			
 			cout << "[Ingrese el nombre del archivo a guardar]: ";
+			cout << "[Ej: ARCHIVO.txt]" << endl;
 			cin >> nombreArchivo;
-			ofstream archivoGuardado(nombreArchivo + ".txt");
+			ofstream archivoGuardado(nombreArchivo);
 			archivoGuardado << text << endl;
 			archivoGuardado.close();
 			char* letra = new char[text.length() + 1];
@@ -222,7 +257,6 @@ void cajaTexto() {
 			}
 			cout << "[Archivo guardado]" << endl;
 			archiv->insertar(cambios, rechazado, letras, nombreArchivo);
-			cambios.graficar();
 			cout << "Desea regresar al menú principal? [S/N]" << endl;
 			char confir = _getch();
 			if (confir == 's' || confir == 'S') {
@@ -242,13 +276,9 @@ void cajaTexto() {
 
 int main()
 {
-	//menu();
+	menu();
 
-	CambiosRealizados lista;
-	lista.push("hola", "adios", true);
-	lista.push("hola", "adios", true);
-	lista.graficar();
-	system("pause");
+
 	return 0;
 }
 

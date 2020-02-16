@@ -8,11 +8,13 @@
 using namespace std;
 class NodoCambios {
 private:
-	NodoCambios* siguiente;
+
+public:
+	NodoCambios* siguiente = 0;
+	bool estado;
 	string palabraB;
 	string palabraR;
-	bool estado;
-public:
+
 	NodoCambios(string palabraB, string palabraR, bool estado)
 	{
 		this->palabraB = palabraB;
@@ -51,7 +53,7 @@ public:
 	{
 		return palabraR;
 	}
-	string getEstado()
+	const char* getEstado()
 	{
 		if (estado == true) {
 			return "Sin alterar";

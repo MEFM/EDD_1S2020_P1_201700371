@@ -10,12 +10,12 @@ using namespace std;
 class NodoArchivo {
 private:
 	NodoArchivo* siguiente;
-	CambiosRealizados cambios;
+	CambiosRealizados* cambios;
 	Denegado* rechazado;
 	LetrasTexto* texto;
 	string nombre;
 public:
-	NodoArchivo(CambiosRealizados cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
+	NodoArchivo(CambiosRealizados* cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
 		this->cambios = cambios;
 		this->rechazado = rechazado;
 		this->texto = texto;
@@ -26,7 +26,7 @@ public:
 	void setSiguiente(NodoArchivo* siguiente) {
 		this->siguiente = siguiente;
 	}
-	void setCambios(CambiosRealizados cambios) {
+	void setCambios(CambiosRealizados* cambios) {
 		this->cambios = cambios;
 	}
 	void setRechazado(Denegado* rechazado) {
@@ -42,7 +42,7 @@ public:
 	NodoArchivo* getSiguiente() {
 		return this->siguiente;
 	}
-	CambiosRealizados getCambios() {
+	CambiosRealizados* getCambios() {
 		return cambios;
 	}
 	Denegado* getRechazado() {
@@ -62,9 +62,10 @@ private:
 	NodoArchivo* ultimo;
 public:
 
-	void insertar(CambiosRealizados cambios, Denegado* rechazado ,LetrasTexto* texto, string nombre);
-	void menuReportes(CambiosRealizados cambios, Denegado* rechazado, LetrasTexto* texto, string nombre);
+	void insertar(CambiosRealizados* cambios, Denegado* rechazado ,LetrasTexto* texto, string nombre);
+	void menuReportes(CambiosRealizados* cambios, Denegado* rechazado, LetrasTexto* texto, string nombre);
 	void menuArchivos();
+	void menuReportesAbrir(string archivo);
 	void graficar();
 
 };

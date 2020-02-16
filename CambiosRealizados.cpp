@@ -7,13 +7,14 @@ void CambiosRealizados::push(string buscar, string reemplazo, bool estado) {
 
 	if (primero == 0) {
 		primero = nuevo;
-
-		//insertListaOrdenadaB(nuevo->getPalabraB());
-		//insertListaOrdenadaR(nuevo->getPalabraR());
+		this->insertListaOrdenadaR(reemplazo);
+		this->insertListaOrdenadaB(buscar);
+		
 	}
 	else {
-		//insertListaOrdenadaB(nuevo->getPalabraB());
-		//insertListaOrdenadaR(nuevo->getPalabraR());
+
+		this->insertListaOrdenadaR(reemplazo);
+		this->insertListaOrdenadaB(buscar);
 		nuevo->setSiguiente(primero);
 		primero = nuevo;
 	}
@@ -27,7 +28,7 @@ void CambiosRealizados::insertListaOrdenadaB(string palabraB) {
 	}
 	else {
 		//Insertar Ordenado
-		NodoCambios* auxiliar = this->primeroB;
+		NodoCambios* auxiliar = primeroB;
 
 		while (auxiliar->getSiguiente() != 0 && strcmp(auxiliar->getPalabraB().c_str(), auxiliar->getSiguiente()->getPalabraB().c_str()) > 0) {
 
@@ -44,7 +45,7 @@ void CambiosRealizados::insertListaOrdenadaR(string palabraR) {
 	NodoCambios* nuevo = new NodoCambios("", palabraR, true);
 
 	if (this->primeroR == 0) {
-		cout << "No hay palabras" << endl;
+		this->primeroR = nuevo;
 	}
 	else {
 		//Insertar Ordenado
@@ -91,19 +92,24 @@ void CambiosRealizados::eliminarListaR() {
 
 void CambiosRealizados::graficar() {
 	ofstream cambiosRealizados("cambios.dot");
-	cambiosRealizados << "digraph a{" << endl;
+	cambiosRealizados << "digraph bf{" << endl;
 	cambiosRealizados << "rankdir = LR;" << endl;
 	cambiosRealizados << "node[shape = square];" << endl;
+
 	NodoCambios* aux = this->primero;
 	while (aux != 0) {
-		cambiosRealizados << "x" << aux << "label[Palabra buscada = \"" << aux->getPalabraB() << "\nPalabra reemplazada = \"" << aux->getPalabraR() <<" ];" << endl;
-		cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
-		aux = aux->getSiguiente();
+		cambiosRealizados << "x" << aux << "[label = \"Palabra buscada = " << aux->getPalabraB() << "\\nPalabra reemplazo = " << aux->getPalabraR() << "\\nEstado = " << aux->getEstado() << "\"];" << endl;
+		if (aux->getSiguiente() != 0) {
+			cout << aux->getPalabraB() << " palabra" << endl;
+			cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
+		}
+		aux = aux->siguiente;
 	}
 	cambiosRealizados << "}" << endl;
 	cambiosRealizados.close();
 	system("dot -Tpng cambios.dot -o cambios.png");
 	system("cambios.png");
+	system("pause");
 }
 
 void CambiosRealizados::graficarBuscadas() {
@@ -113,9 +119,9 @@ void CambiosRealizados::graficarBuscadas() {
 	cambiosRealizados << "node[shape = square];" << endl;
 	NodoCambios* aux = this->primeroB;
 	while (aux != 0) {
-		cambiosRealizados << "x" << aux << "label[Palabra buscada = \"" << aux->getPalabraB() << "\nPalabra reemplazada = \"" << aux->getPalabraR() << "\nEstado = " << aux->getEstado() << "];" << endl;
+		cambiosRealizados << "x" << aux << "[label = \"Palabra buscada: " << aux->getPalabraB()<< "\"];" << endl;
 		cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
-		aux = aux->getSiguiente();
+		aux = aux->siguiente;
 	}
 	cambiosRealizados << "}" << endl;
 	cambiosRealizados.close();
@@ -130,9 +136,9 @@ void CambiosRealizados::graficarReemplazadas() {
 	cambiosRealizados << "node[shape = square];" << endl;
 	NodoCambios* aux = this->primeroR;
 	while (aux != 0) {
-		cambiosRealizados << "x" << aux << "label[Palabra buscada = \"" << aux->getPalabraB() << "\nPalabra reemplazada = \"" << aux->getPalabraR() << "\nEstado = " << aux->getEstado() << "];" << endl;
+		cambiosRealizados << "x" << aux << "[label = \"Palabra reemplazo = " << aux->getPalabraR() << "\"];" << endl;
 		cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
-		aux = aux->getSiguiente();
+		aux = aux->siguiente;
 	}
 	cambiosRealizados << "}" << endl;
 	cambiosRealizados.close();
