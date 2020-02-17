@@ -12,7 +12,7 @@ void Archivo::insertar(CambiosRealizados* cambios, Denegado* rechazado, LetrasTe
 		ultimo = nuevo;
 		nuevo->setSiguiente(this->primero);
 	}
-		
+
 }
 
 
@@ -25,14 +25,11 @@ void Archivo::graficar() {
 		ofstream archivo("archivos.dot");
 		archivo << "digraph archivos{" << endl;
 		archivo << "node[shape = square];" << endl;
+		archivo << "rankdir = LR;" << endl;
 		do {
-			/*
-cambiosRealizados << "x" << aux << "label[Palabra buscada = \"" << aux->getPalabraB() << "\nPalabra reemplazada = \"" << aux->getPalabraR() << "\nEstado = " << aux->getEstado() << "];" << endl;
-cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
-			*/
-			
-			cout << "x" << auxiliar << "label[archivo = \"" << auxiliar->getNombre() << "\"];" << endl;
-			cout << "x" << auxiliar << "-> x" << auxiliar->getSiguiente() << endl;
+
+			archivo << "x" << auxiliar << "[label=\"archivo = " << auxiliar->getNombre() << "\"];" << endl;
+			archivo << "x" << auxiliar << "-> x" << auxiliar->getSiguiente() << endl;
 			auxiliar = auxiliar->getSiguiente();
 		} while (auxiliar != this->primero);
 		archivo << "}" << endl;
@@ -40,6 +37,37 @@ cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << 
 		system("dot -Tpng archivos.dot -o archivos.png");
 		system("archivos.png");
 	}
+}
+
+void Archivo::menuArchivos() {
+	if (this->primero == 0) {
+		cout << "Sory bro, it can not be open." << endl;
+	}
+	else {
+		system("cls");
+		bool validador = true;
+		while (validador) {
+			NodoArchivo* auxiliar = this->primero;
+			int contador = 1;
+			do {
+				cout << contador++ << ". " << auxiliar->getNombre() << endl;
+				auxiliar = auxiliar->getSiguiente();
+			} while (auxiliar != this->primero);
+			
+			cout << "Si desea ver el reporte de archivos presione X." << endl;
+			cout << "Presione cualquier tecla para volver al menu principal." << endl;
+			char controlador = _getch();
+			
+			if (controlador == 'X') {
+				graficar();
+			}
+			else {
+				validador = false;
+			}
+		}
+
+	}
+	system("cls");
 }
 
 void Archivo::menuReportes(CambiosRealizados* cambios, Denegado* rechazado, LetrasTexto* texto, string nombre) {
@@ -63,7 +91,7 @@ void Archivo::menuReportes(CambiosRealizados* cambios, Denegado* rechazado, Letr
 		else if (opcion == 2) {
 			cambios->graficar();
 			rechazado->graficar();
-			
+
 		}
 		//Palabras ordenadas de busquedas y reemplazos
 		else if (opcion == 3) {
@@ -81,14 +109,16 @@ void Archivo::menuReportes(CambiosRealizados* cambios, Denegado* rechazado, Letr
 
 }
 
-
 void Archivo::menuReportesAbrir(string nombre) {
 	if (this->primero == 0) {
 		cout << "Lo siento brou el menu de reportes no esta disponible para ti" << endl;
 	}
 	else {
 		NodoArchivo* auxiliar = this->primero;
-		while (auxiliar != 0 || auxiliar->getNombre() != nombre) {
+		while (auxiliar->getNombre() != nombre) {
+			if (auxiliar->getSiguiente() == 0) {
+				break;
+			}
 			auxiliar = auxiliar->getSiguiente();
 		}
 

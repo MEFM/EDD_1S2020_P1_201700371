@@ -1,8 +1,0 @@
-digraph a{
-rankdir = LR;
-node[shape = square];
-x01431048[label = "Palabra buscada: io"];
-x01431048->x01430B20;
-x01430B20[label = "Palabra buscada: ia"];
-x01430B20->x00000000;
-}

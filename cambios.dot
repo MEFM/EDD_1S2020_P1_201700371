@@ -1,7 +1,0 @@
-digraph bf{
-rankdir = LR;
-node[shape = square];
-x014310B8[label = "Palabra buscada = ia\nPalabra reemplazo = oi\nEstado = Sin alterar"];
-x014310B8->x01433A58;
-x01433A58[label = "Palabra buscada = io\nPalabra reemplazo = oa\nEstado = Sin alterar"];
-}

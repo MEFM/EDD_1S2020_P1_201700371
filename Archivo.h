@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 #include "CambiosRealizados.h"
 #include "LetrasTexto.h"

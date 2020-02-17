@@ -55,6 +55,7 @@ void menu()
 			break;
 		case 3:
 			//Recientes
+			archiv->menuArchivos();
 			break;
 		case 4:
 			validador = false;
@@ -100,6 +101,9 @@ void abrir() {
 
 	bool validador = true;
 	LetrasTexto* caracteres = new LetrasTexto();
+	CambiosRealizados* cambios = new CambiosRealizados();
+	Denegado* denegado = new Denegado();
+
 	while (validador) {
 		system("cls");
 		cout << parrafo << endl;
@@ -118,17 +122,49 @@ void abrir() {
 			for (int i = 0; i< (parrafo.length() + 1); i++) {
 				caracteres->insertarPrimero(letraa[i]);
 			}
+			archiv->insertar(cambios, denegado, caracteres, archivo);
 			_getch();
-		}else if (opcion == "^c") {
+		}
+		else if (opcion == "^c") {
 			system("cls");
 			cout << "Seccion de reportes" << endl;
 			archiv->menuReportesAbrir(archivo);
 
-		}else if (opcion == "^w") {
+		}
+		else if (opcion == "^w") {
+			system("cls");
+			manetenedor = parrafo;
+			string buscar = "";
+			string reemplazo = "";
+
+			cout << "[Palabra a buscar]: ";
+			cin.ignore();
+			getline(cin, buscar);
+			cout << endl;
+			cout << "[Palabra reemplazante]: ";
+			getline(cin, reemplazo);
+
+			system("cls");
+			cout << "Esta seguro de realizar el cambio?? ^y(si) ^z(no)" << endl;
+			string confirmacion = "";
+			getline(cin, confirmacion);
+
+			if (confirmacion == "^y") {
+				buscarReemplazar(parrafo, buscar, reemplazo);
+				cambios->push(buscar, reemplazo, true);
+				denegado->pop();
+			}
+			else {
+				cambios->pop();
+				denegado->insertar(buscar, reemplazo, false);
+
+			}
+
+
 
 		}
 		else if(opcion == "^p"){
-
+			validador = false;
 		}
 		
 		

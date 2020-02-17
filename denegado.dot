@@ -1,4 +1,0 @@
-digraph a{
-rankdir = LR;
-node[shape = square];
-}

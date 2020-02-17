@@ -1,8 +1,0 @@
-digraph a{
-rankdir = LR;
-node[shape = square];
-x01433AC8[label = "Palabra reemplazo = oa"];
-x01433AC8->x01430AB0;
-x01430AB0[label = "Palabra reemplazo = oi"];
-x01430AB0->x00000000;
-}
