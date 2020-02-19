@@ -1,0 +1,9 @@
+digraph bf{
+rankdir = LR;
+node[shape = square];
+x00B81C48[label = "Palabra buscada = Hola si estuardo\nPalabra reemplazo = Hola soy estuardo\nEstado = Sin alterar"];
+x00B81C48->x00B81F38;
+x00B81F38[label = "Palabra buscada = seu\nPalabra reemplazo = si\nEstado = Sin alterar"];
+x00B81F38->x00B75F60;
+x00B75F60[label = "Palabra buscada = soy\nPalabra reemplazo = seu\nEstado = Sin alterar"];
+}

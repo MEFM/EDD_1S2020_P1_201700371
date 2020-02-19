@@ -106,7 +106,7 @@ void Archivo::menuReportes(CambiosRealizados* cambios, Denegado* rechazado, Letr
 			break;
 		}
 	}
-
+	
 }
 
 void Archivo::menuReportesAbrir(string nombre) {

@@ -1,0 +1,10 @@
+digraph a{
+rankdir = LR;
+node[shape = square];
+x00B848A0[label = "Palabra reemplazo = seu"];
+x00B848A0->x00B81CB8;
+x00B81CB8[label = "Palabra reemplazo = Hola soy estuardo"];
+x00B81CB8->x00B81FA8;
+x00B81FA8[label = "Palabra reemplazo = si"];
+x00B81FA8->x00000000;
+}

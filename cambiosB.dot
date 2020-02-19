@@ -1,0 +1,10 @@
+digraph a{
+rankdir = LR;
+node[shape = square];
+x00B84910[label = "Palabra buscada: soy"];
+x00B84910->x00B81BD8;
+x00B81BD8[label = "Palabra buscada: seu"];
+x00B81BD8->x00B76AA8;
+x00B76AA8[label = "Palabra buscada: Hola si estuardo"];
+x00B76AA8->x00000000;
+}
