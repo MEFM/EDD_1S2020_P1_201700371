@@ -152,10 +152,10 @@ void abrir() {
 			if (confirmacion == "^y") {
 				buscarReemplazar(parrafo, buscar, reemplazo);
 				cambios->push(buscar, reemplazo, true);
-				denegado->pop();
+				//denegado->pop();
 			}
 			else {
-				cambios->pop();
+				//cambios->pop();
 				denegado->insertar(buscar, reemplazo, false);
 
 			}
@@ -189,7 +189,7 @@ void cajaTexto() {
 	while (validador) {
 		system("cls");
 		cout << text << endl;
-		cout << "Guardar ^s		Reportes ^c		Buscar y Reemplazar ^w" << endl;
+		cout << "Guardar ^s		Reportes ^c		Buscar y Reemplazar ^w		Menu ^p" << endl;
 		cout << "Ingresa el texto!!" << endl;
 		getline(cin, todo, '^');//^
 		text += todo;
@@ -216,6 +216,9 @@ void cajaTexto() {
 			system("cls");
 			cout << text << endl;
 
+		}
+		else if (codigo == 112) {
+			validador = false;
 		}
 		//Este es el if para buscar y reemplazar
 		else if (codigo == 119) {
@@ -246,7 +249,6 @@ void cajaTexto() {
 			if (cambio == "^z") { //aca se revierten los cambios que se realizaron con anterioridad
 				text = soporte;
 				auxiliar << text << endl;
-				cambios->pop();
 				rechazado->insertar(buscar, reemplazar, false);
 				//cout << "0s" << endl;
 			}
@@ -256,7 +258,6 @@ void cajaTexto() {
 				cambios->push(buscar, reemplazar, true);
 
 				//cambios.graficar();
-				rechazado->pop();
 				auxiliar << text << endl;
 				auxiliar.close();
 				//cout << "as" << endl;

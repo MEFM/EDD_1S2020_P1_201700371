@@ -1,4 +1,6 @@
 digraph a{
 rankdir = LR;
 node[shape = square];
+x013641B0[label = "Palabra buscada = EsPalabra reemplazada = esEstado = Revertido"];
+x013641B0->x00000000;
 }

@@ -20,7 +20,7 @@ void Denegado::graficar() {
 	cambiosRealizados << "node[shape = square];" << endl;
 	NodoDenegado* aux = this->primero;
 	while (aux != 0) {
-		cambiosRealizados << "x" << aux << "label[Palabra buscada = \"" << aux->getPalabraB() << "\"Palabra reemplazada = \"" << aux->getPalabraR() << "\"Estado = \"" << aux->getEstado() << "\"];" << endl;
+		cambiosRealizados << "x" << aux << "[label = \"Palabra buscada = " << aux->getPalabraB() << "\\nPalabra reemplazada = " << aux->getPalabraR() << "\\nEstado = " << aux->getEstado() << "\"];" << endl;
 		cambiosRealizados << "x" << aux << "->" << "x" << aux->getSiguiente() << ";" << endl;
 		aux = aux->getSiguiente();
 	}
